@@ -13,6 +13,9 @@
       },
       "web_app_sku": {
         "value": "Free"
+      },
+      "repo_url": {
+        "value": "https://github.com/zamomfg/Looking-glass"
       }
     }
   }

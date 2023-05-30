@@ -1,8 +1,7 @@
 
-// param skip_app_build bool
-
 @allowed([ 'Free', 'Standard' ])
 param sku string = 'Standard'
+param repo_url string
 
 param app_name string
 param enviroment string
@@ -17,8 +16,7 @@ resource swa_resource 'Microsoft.Web/staticSites@2021-01-15' = {
   tags: null
   properties: {
       branch: 'main'
-      // repositoryToken: tokenParam
-      repositoryUrl: 'https://github.com/zamomfg/Looking-glass'
+      repositoryUrl: repo_url
       buildProperties: {
           appLocation: '../app'
           apiLocation: '../api'

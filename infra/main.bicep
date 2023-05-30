@@ -7,7 +7,10 @@ param location string
 param location_name string
 
 param web_app_sku string
+param repo_url string
 
+// added the resouce name here aswell since the name need to be known before the resouce group is created to use it in the scope for other modules
+// TODO remove the name in the module file
 var rg_name = 'rg-${name}-${enviroment}-${location_name}'
 
 targetScope = 'subscription'
@@ -32,6 +35,7 @@ module static_web_app 'looking_glass_web_app.bicep' = {
     location: location
     location_name: location_name
     sku: web_app_sku
+    repo_url: repo_url
   }
   dependsOn: [
     resource_group
