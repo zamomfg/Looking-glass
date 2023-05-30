@@ -1,0 +1,21 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "enviroment": {
+        "value": "prod"
+      },
+      "location": {
+        "value": "northeurope"
+      },
+      "location_name": {
+        "value": "neu"
+      },
+      "web_app_sku": {
+        "value": "Free"
+      },
+      "skip_app_build": {
+        "value": true
+      }
+    }
+  }
