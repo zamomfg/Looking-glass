@@ -7,30 +7,31 @@ param location string
 param location_name string
 
 param web_app_sku string
-param skip_app_build bool
 
+var rg_name = 'rg-${name}-${enviroment}-${location_name}'
 
-module resource_group 'looking_glass_web_app.bicep' = {
+targetScope = 'subscription'
+
+module resource_group 'resouce_group.bicep' = {
   name: 'rg'
+  scope: subscription()
   params: {
-    app_name: name,
-    enviroment: enviroment,
-    location: location,
+    app_name: name
+    enviroment: enviroment
+    location: location
     location_name: location_name
-    scope: subscription()
   }
 }
 
 module static_web_app 'looking_glass_web_app.bicep' = {
   name: 'swa'
+  scope:  resourceGroup(rg_name)
   params: {
-    app_name: name,
-    enviroment: enviroment,
-    location: location,
-    location_name: location_name,
-    sku: web_app_sku,
-    skip_app_build: skip_app_build,
-    scope:  resourceGroup(resource_group.outputs.resourceGroupOutput)
+    app_name: name
+    enviroment: enviroment
+    location: location
+    location_name: location_name
+    sku: web_app_sku
   }
   dependsOn: [
     resource_group

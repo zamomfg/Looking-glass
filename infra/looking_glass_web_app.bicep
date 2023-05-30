@@ -1,5 +1,5 @@
 
-param skip_app_build bool
+// param skip_app_build bool
 
 @allowed([ 'Free', 'Standard' ])
 param sku string = 'Standard'
@@ -16,15 +16,13 @@ resource swa_resource 'Microsoft.Web/staticSites@2021-01-15' = {
   location: location
   tags: null
   properties: {
-      branch: 'main',
-      // repositoryToken: tokenParam,
-      // repositoryUrl: 'https://github.com/',
+      branch: 'main'
+      // repositoryToken: tokenParam
+      repositoryUrl: 'https://github.com/zamomfg/Looking-glass'
       buildProperties: {
-          appLocation: '../app',
-          apiLocation: '../api',
+          appLocation: '../app'
+          apiLocation: '../api'
           outputLocation: '../output'
-          skip_api_build: skip_app_build,
-          skip_api_build: skip_app_build
       }
   }
   sku: {

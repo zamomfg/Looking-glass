@@ -6,16 +6,13 @@
         "value": "prod"
       },
       "location": {
-        "value": "northeurope"
+        "value": "westeurope"
       },
       "location_name": {
-        "value": "neu"
+        "value": "weu"
       },
       "web_app_sku": {
         "value": "Free"
-      },
-      "skip_app_build": {
-        "value": true
       }
     }
   }
