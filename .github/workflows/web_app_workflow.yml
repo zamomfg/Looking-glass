@@ -1,7 +1,7 @@
 on: [push]
 name: Azure ARM
 jobs:
-  build_and_deploy_infra:
+  build-and-deploy-infra:
     runs-on: ubuntu-latest
     name: Deploy infra
     steps:
@@ -25,9 +25,10 @@ jobs:
   build_and_deploy_job:
     # if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    needs: build_and_deploy_infra
+    needs: build-and-deploy-infra
     name: Deploy app
     steps:
+
       - name: az cli login
         uses: azure/login@v1
         with:
