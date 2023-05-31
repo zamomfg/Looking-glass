@@ -15,20 +15,26 @@ var rg_name = 'rg-${name}-${enviroment}-${location_name}'
 
 targetScope = 'subscription'
 
-module resource_group 'resouce_group.bicep' = {
-  name: 'rg'
-  scope: subscription()
-  params: {
-    app_name: name
-    enviroment: enviroment
-    location: location
-    location_name: location_name
-  }
+resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+  name: rg_name
+  location: location
 }
+
+// module resource_group 'resouce_group.bicep' = {
+//   name: 'rg'
+//   scope: subscription()
+//   params: {
+//     app_name: name
+//     enviroment: enviroment
+//     location: location
+//     location_name: location_name
+//   }
+// }
 
 module static_web_app 'looking_glass_web_app.bicep' = {
   name: 'swa'
-  scope:  resourceGroup(rg_name)
+  // scope:  resourceGroup(rg_name)
+  scope: rg
   params: {
     app_name: name
     enviroment: enviroment
@@ -38,6 +44,8 @@ module static_web_app 'looking_glass_web_app.bicep' = {
     repo_url: repo_url
   }
   dependsOn: [
-    resource_group
+    rg
   ]
 }
+
+// output targetResourceGroupName string = rg.name
