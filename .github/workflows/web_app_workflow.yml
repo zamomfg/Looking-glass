@@ -1,12 +1,14 @@
 on: [push]
 name: Azure ARM
 jobs:
-  build-and-deploy-infra:
+  build_and_deploy_infra:
     runs-on: ubuntu-latest
+    name: Deploy infra
     steps:
-
+      name: github checkout
     - uses: actions/checkout@main
 
+      name: azure login
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -23,23 +25,28 @@ jobs:
   build_and_deploy_job:
     # if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    needs: build-and-deploy-infra
+    needs: build_and_deploy_infra
     name: Deploy app
     steps:
-      - name: 'Az CLI Login via OIDC'
+      - name: az cli login
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: "Add a mask to the SWA Token"
+
+      - name: "echo static web app name"
+        run: echo "SWA name ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }}"
+          
+      # - name: "Add a mask to the SWA Token"
+      #   uses: azure/CLI@v1
+      #   with:
+      #     inlineScript: |
+      #       echo "::add-mask::$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')"
+
+      - name: "get swa token"
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            echo "::add-mask::$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')"            
-      - name: "Get SWA Token"
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            echo "SWA_TOKEN=$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')" >> $GITHUB_ENV            
+            echo "SWA_TOKEN=$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')" >> $GITHUB_ENV
     
       # - uses: actions/checkout@v2
       #   with:
