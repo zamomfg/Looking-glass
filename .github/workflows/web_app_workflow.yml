@@ -53,8 +53,8 @@ jobs:
       - name: "print working dir"
         run: echo "working dir $(pwd)"
 
-      - name: "print ls"
-        run: ls
+      - name: "print app file"
+        run: file ./app/index.html
 
       - name: "Build and Deploy SWA"
         id: builddeploy
