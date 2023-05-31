@@ -21,3 +21,5 @@ module static_web_app 'looking_glass_web_app.bicep' = {
     repo_url: repo_url
   }
 }
+
+output staticWebAppName string = static_web_app.outputs.staticWebAppName
