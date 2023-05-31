@@ -50,13 +50,17 @@ jobs:
           inlineScript: |
             echo "SWA_TOKEN=$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')" >> $GITHUB_ENV
     
+      - name: "print working dir"
+        run: echo "working dir $(pwd)"
+
+
       - name: "Build and Deploy SWA"
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ env.SWA_TOKEN }}
           action: "upload"
-          api_location: "api"
-          app_location: "app"
           skip_app_build: true
+          app_location: "app"
+          api_location: "api"
           config_file_location: "/"
