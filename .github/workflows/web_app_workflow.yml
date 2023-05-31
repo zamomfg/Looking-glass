@@ -54,7 +54,7 @@ jobs:
         run: echo "working dir $(pwd)"
 
       - name: "print ls"
-        run: echo "ls $(ls)"
+        run: ls
 
       - name: "Build and Deploy SWA"
         id: builddeploy
@@ -63,6 +63,6 @@ jobs:
           azure_static_web_apps_api_token: ${{ env.SWA_TOKEN }}
           action: "upload"
           skip_app_build: true
-          app_location: "app"
+          app_location: "./app"
           api_location: "api"
           config_file_location: "/"
