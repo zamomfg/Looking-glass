@@ -49,10 +49,12 @@ jobs:
         with:
           inlineScript: |
             echo "SWA_TOKEN=$(az staticwebapp secrets list -n ${{ needs.build-and-deploy-infra.outputs.staticWebAppName }} | jq -r '.properties.apiKey')" >> $GITHUB_ENV
-    
+
       - name: "print working dir"
         run: echo "working dir $(pwd)"
 
+      - name: "print ls"
+        run: echo "ls $(ls)"
 
       - name: "Build and Deploy SWA"
         id: builddeploy
