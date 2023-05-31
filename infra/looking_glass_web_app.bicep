@@ -1,6 +1,6 @@
 
 @allowed([ 'Free', 'Standard' ])
-param sku string = 'Standard'
+param sku string
 param repo_url string
 
 param app_name string
