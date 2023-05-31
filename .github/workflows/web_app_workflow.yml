@@ -54,7 +54,7 @@ jobs:
         run: echo "working dir $(pwd)"
 
       - name: "print app file"
-        run: file ./app/index.html
+        run: file ./app
 
       - name: "Build and Deploy SWA"
         id: builddeploy
