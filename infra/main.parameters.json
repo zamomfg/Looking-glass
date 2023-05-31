@@ -16,6 +16,9 @@
       },
       "repo_url": {
         "value": "https://github.com/zamomfg/Looking-glass"
+      },
+      "app_name": {
+        "value": "looking_glass"
       }
     }
   }
