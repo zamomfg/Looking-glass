@@ -1,6 +1,12 @@
 #!/bin/bash
 
-read -p "Subscription id: " subscription_id
+# if [ -z "$1" ]
+# then
+    subscription_id=$1
+# else
+#     echo $1
+#     read -p "Subscription id: " subscription_id
+# fi
 
 sp_name="GithubActionLookingGlass"
 
@@ -15,7 +21,10 @@ rg_name=$(echo "rg-$rg_app_name-$rg_enviroment-$rg_location_name" | tr -d '"')
 
 az group create -l $location -n $rg_name
 
-sp_json=$(az ad sp create-for-rbac --name $sp_name --role contributor --scopes "/subscriptions/$subscription_id/resourceGroups/$rg_name") #--sdk-auth | jq '. | {clientId: .clientId, clientSecret: .clientSecret, subscriptionId: .subscriptionId,tenantId: .tenantId}'
+# sp_json=$(az ad sp create-for-rbac --name $sp_name --role contributor --scopes "/subscriptions/$subscription_id/resourceGroups/$rg_name") --sdk-auth # | jq '. | {clientId: .clientId, clientSecret: .clientSecret, subscriptionId: .subscriptionId,tenantId: .tenantId}'
+
+tenant_id=$(az account show | jq .tenantId | tr -d '"')
+sp_json=$(az ad sp create-for-rbac --name $sp_name --role contributor --scopes "/subscriptions/$subscription_id/resourceGroups/$rg_name" | jq --arg  subscriptionId "$subscription_id" '. | {clientId: .appId, clientSecret: .password, subscriptionId: $subscriptionId, tenantId: .tenant}')
 
 echo "Github secrets:"
 echo
