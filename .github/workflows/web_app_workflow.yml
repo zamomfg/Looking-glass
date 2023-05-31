@@ -4,6 +4,8 @@ jobs:
   build-and-deploy-infra:
     name: Deploy infra
     runs-on: ubuntu-latest
+    outputs:
+      staticWebAppName: ${{ steps.armdeploy.outputs.staticWebAppName }}
     steps:
 
     - name: github checkout
@@ -15,6 +17,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: deploy infra
+      id: armdeploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
