@@ -1,0 +1,136 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.17.1.54307",
+      "templateHash": "816320280247092376"
+    }
+  },
+  "parameters": {
+    "app_name": {
+      "type": "string"
+    },
+    "enviroment": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    },
+    "web_app_sku": {
+      "type": "string"
+    },
+    "repo_url": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2022-09-01",
+      "name": "swa",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "app_name": {
+            "value": "[parameters('app_name')]"
+          },
+          "enviroment": {
+            "value": "[parameters('enviroment')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "location_name": {
+            "value": "[parameters('location_name')]"
+          },
+          "sku": {
+            "value": "[parameters('web_app_sku')]"
+          },
+          "repo_url": {
+            "value": "[parameters('repo_url')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.17.1.54307",
+              "templateHash": "10762938726202360341"
+            }
+          },
+          "parameters": {
+            "sku": {
+              "type": "string",
+              "allowedValues": [
+                "Free",
+                "Standard"
+              ]
+            },
+            "repo_url": {
+              "type": "string"
+            },
+            "app_name": {
+              "type": "string"
+            },
+            "enviroment": {
+              "type": "string"
+            },
+            "location": {
+              "type": "string"
+            },
+            "location_name": {
+              "type": "string"
+            }
+          },
+          "variables": {
+            "swa_name": "[format('swa-{0}-{1}-{2}', parameters('app_name'), parameters('enviroment'), parameters('location_name'))]"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Web/staticSites",
+              "apiVersion": "2021-01-15",
+              "name": "[variables('swa_name')]",
+              "location": "[parameters('location')]",
+              "tags": null,
+              "properties": {
+                "branch": "main",
+                "repositoryUrl": "[parameters('repo_url')]",
+                "buildProperties": {
+                  "appLocation": "../app",
+                  "apiLocation": "../api",
+                  "outputLocation": "../output"
+                }
+              },
+              "sku": {
+                "name": "[parameters('sku')]",
+                "size": "[parameters('sku')]"
+              }
+            }
+          ],
+          "outputs": {
+            "staticWebAppName": {
+              "type": "string",
+              "value": "[variables('swa_name')]"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "staticWebAppName": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'swa'), '2022-09-01').outputs.staticWebAppName.value]"
+    }
+  }
+}

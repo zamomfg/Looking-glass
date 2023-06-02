@@ -4,8 +4,8 @@
     },
     "routes": [
       {
-        "route": "/*",
-        "allowedRoles": ["authenticated"]
+        "route": "/logout",
+        "redirect": "/.auth/logout"
       },
       {
         "route": "/.auth/login/twitter",
@@ -14,6 +14,10 @@
       {
         "route": "/.auth/login/github",
         "statusCode": 404
+      },
+      {
+        "route": "/*",
+        "allowedRoles": ["authenticated"]
       }
     ],
     "responseOverrides": {
