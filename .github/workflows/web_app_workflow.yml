@@ -67,12 +67,6 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ env.SWA_TOKEN }}
           action: "upload"
-          skip_app_build: true
           app_location: "app"
           api_location: "api"
           config_file_location: "/"
-
-
-    # steps:
-    # - name: "print ls"
-    #   run: ls -C
