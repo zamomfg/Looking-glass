@@ -11,7 +11,7 @@ jobs:
     - name: "Github repo checkout"
       uses: actions/checkout@main
 
-    - name: "Zzure login"
+    - name: "Azure login"
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}

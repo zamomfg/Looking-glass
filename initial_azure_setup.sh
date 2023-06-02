@@ -1,21 +1,21 @@
 #!/bin/bash
 
-# if [ -z "$1" ]
-# then
+if [ -z "$1" ]
+then
+    az account list | jq -r '.[] | [.name, .id] | @tsv'
+    read -p "Subscription id: " subscription_id
+else
     subscription_id=$1
-# else
-#     echo $1
-#     read -p "Subscription id: " subscription_id
-# fi
+fi
 
 sp_name="GithubActionLookingGlass"
 
 
 # getting name vars from params file. This is probebly a nicer way of doing this...
-location=$(cat ./infra/main.parameters.json | jq '.parameters.location.value'| tr -d '"')
-rg_enviroment=$(cat ./infra/main.parameters.json | jq '.parameters.enviroment.value')
-rg_location_name=$(cat ./infra/main.parameters.json | jq '.parameters.location_name.value')
-rg_app_name=$(cat ./infra/main.parameters.json | jq '.parameters.app_name.value')
+location=$(cat ./infra/main.parameters.json | jq -r '.parameters.location.value')
+rg_enviroment=$(cat ./infra/main.parameters.json | jq -r '.parameters.enviroment.value')
+rg_location_name=$(cat ./infra/main.parameters.json | jq -r '.parameters.location_name.value')
+rg_app_name=$(cat ./infra/main.parameters.json | jq -r '.parameters.app_name.value')
 
 rg_name=$(echo "rg-$rg_app_name-$rg_enviroment-$rg_location_name" | tr -d '"')
 
