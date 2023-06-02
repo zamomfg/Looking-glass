@@ -8,10 +8,6 @@
         "allowedRoles": ["authenticated"]
       },
       {
-        "route": "/logout",
-        "redirect": "/.auth/logout"
-      },
-      {
         "route": "/.auth/login/twitter",
         "statusCode": 404
       },
