@@ -6,7 +6,8 @@
       "apiLocation": "api",
       "outputLocation": ".",
       "apiLanguage": "python",
-      "apiVersion": "3.8"
+      "apiVersion": "3.8",
+      "swaConfigLocation": "app"
     }
   }
 }
